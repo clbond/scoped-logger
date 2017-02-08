@@ -4,6 +4,7 @@
   "description": "Scoped logging library for NodeJS applications",
   "main": "build/index.js",
   "scripts": {
+    "postinstall": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch"
   },
