@@ -11,7 +11,9 @@ export const scopeToStrings = (scope: Scope): Array<string> => {
   const scopes = new Array<string>();
 
   do {
-    scopes.push(scope.description);
+    if (scope.description) {
+      scopes.push(scope.description);
+    }
     scope = scope.parent;
   } while (scope);
 
