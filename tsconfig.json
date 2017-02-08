@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "lib": ["es2015", "es2016", "dom"],
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "inlineSourceMap": true,
+    "sourceRoot": "tsconfig",
+    "rootDir": "modules",
+    "outDir": "build",
+    "declaration": true
+  },
+  "exclude": [
+    "build",
+    "node_modules"
+  ]
+}
