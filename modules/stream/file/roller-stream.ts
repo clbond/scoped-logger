@@ -26,7 +26,7 @@ const rollingOptions: RollingOptions = {
     previous: 'log.{number}',
   },
   retention: 5,
-  thresholdSize: Math.pow(1024, 2),
+  thresholdSize: Math.pow(1024, 3),
 };
 
 
