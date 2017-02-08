@@ -18,6 +18,7 @@ import {Level} from '../../level';
 import {Scope} from '../../scope';
 import {Stream} from '../stream';
 import {RollingOptions} from './options';
+import {recursiveCreate} from './mkdir';
 
 const rollingOptions: RollingOptions = {
   path: cwd(),
@@ -73,6 +74,8 @@ export class RollerStream implements Stream {
     this.dispose();
 
     try {
+      recursiveCreate(this.currentPath);
+
       const mode =
         constants.O_CREAT |
         constants.O_DIRECT |
