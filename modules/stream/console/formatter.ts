@@ -19,7 +19,7 @@ export function consoleText(level: Level, scope: Scope, message: string, args: A
 
   const coloredArgs = `\u{1b}[0;37m${formatArguments(args)}\u{1b}[=0l`;
 
-  return `${levelString} ${scopeString} ${ansistyles.bright(message)} ${coloredArgs}\n`;
+  return `${levelString} ${scopeString} ${ansistyles.bright(message)} ${coloredArgs}`;
 };
 
 const colorizeLevel = (level: Level): string => {
