@@ -1,6 +1,6 @@
 {
   "name": "scoped-logger",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Scoped logging library for NodeJS applications",
   "main": "build/index.js",
   "scripts": {
