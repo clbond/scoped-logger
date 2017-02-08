@@ -1,8 +1,9 @@
 {
   "name": "scoped-logger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scoped logging library for NodeJS applications",
   "main": "build/index.js",
+  "typings": "build/index.d.ts",
   "scripts": {
     "postinstall": "npm run build",
     "build": "tsc",
