@@ -5,6 +5,8 @@ import {
   scopeToStrings,
 } from '../../scope';
 
+import {formatArguments} from '../formatter';
+
 export function plaintext(level: Level, scope: Scope, message: string, args: Array<any>): string {
   const levelString = Level[level.toString()].toLowerCase();
 
@@ -12,5 +14,5 @@ export function plaintext(level: Level, scope: Scope, message: string, args: Arr
 
   const scopeString = scopeToStrings(scope).join(' > ');
 
-  return `[${date}] [${levelString}] [${scopeString}] ${message} ${(args || []).map(a => JSON.stringify(a, null, 2))}\n`;
+  return `[${date}] [${levelString}] [${scopeString}] ${message} ${formatArguments(args)}\n`;
 };

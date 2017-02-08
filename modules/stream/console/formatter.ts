@@ -8,6 +8,8 @@ import {
   scopeToStrings,
 } from '../../scope';
 
+import {formatArguments} from '../formatter';
+
 export function consoleText(level: Level, scope: Scope, message: string, args: Array<any>): string {
   const levelString = colorizeLevel(level);
 
@@ -15,7 +17,7 @@ export function consoleText(level: Level, scope: Scope, message: string, args: A
 
   const scopeString = `\u{1b}[0;37m[${scopeToStrings(scope).join(ansicolors.brightCyan(' > '))}\u{1b}[0;37m]\u{1b}[=0l`;
 
-  const coloredArgs = `\u{1b}[0;37m${(args || []).map(a => JSON.stringify(a, null, 2))}\u{1b}[=0l`;
+  const coloredArgs = `\u{1b}[0;37m${formatArguments(args)}\u{1b}[=0l`;
 
   return `${levelString} ${scopeString} ${ansistyles.bright(message)} ${coloredArgs}\n`;
 };
