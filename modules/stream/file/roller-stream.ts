@@ -64,7 +64,7 @@ export class RollerStream implements Stream {
   }
 
   dispose() {
-    if (this.fileDescriptor != null && this.fileDescriptor >= 0) {
+    if (this.opened()) {
       closeSync(this.fileDescriptor);
     }
 
