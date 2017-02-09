@@ -43,8 +43,10 @@ export class RollerStream implements Stream {
   }
 
   buffer(level: Level, scope: Scope, message: string, args: Array<any>) {
-    if (this.fileDescriptor == null || this.fileDescriptor < 0) {
-      return;
+    if (this.opened() === false) {
+      if (this.open() === false) {
+        return;
+      }
     }
 
     try {
@@ -69,11 +71,16 @@ export class RollerStream implements Stream {
     this.fileDescriptor = null;
   }
 
+  private opened(): boolean {
+    return this.fileDescriptor != null
+        && this.fileDescriptor >= 0;
+  }
+
   private get currentPath(): string {
     return resolve(join(this.options.path, this.options.filenames.current));
   }
 
-  private open() {
+  private open(): boolean {
     this.dispose();
 
     try {
@@ -88,9 +95,13 @@ export class RollerStream implements Stream {
       if (this.fileDescriptor < 0) {
         throw new Error(`Open returned a sub-zero file descriptor`);
       }
+
+      return true;
     }
     catch (e) {
-      throw new Error(`Failed to open log file: ${e.stack}`);
+      console.error(`Failed to open log file: ${e.stack}`);
+
+      return false;
     }
   }
 
