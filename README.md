@@ -45,9 +45,25 @@ for (const foo of bar) {
   myFunction(foo, logger);
 }
 
-const myFunction = (foo, parentLogger: Logger) => {
-  const logger = parentLogger.newScope('operation Y');
+const myFunction = foo => {
+  const operationLogger = logger.newScope('operation Y');
 
-  logger.debug('Hello!'); // will print the message with scope: [operation X -> operation Y]
+  operationLogger.debug('Hello!'); // will print the message with scope: [operation X -> operation Y]
 }
+```
+
+You can also specify additional output streams for child scopes. For example, maybe we wish to log everything related to _operation Y_ into a separate log file (in addition to the rolling log and console output of the root logger):
+
+```typescript
+import {RollerStream} from 'scoped-logger';
+
+const roller = new RollerStream({
+  path: resolve(join(cwd(), 'log')),
+  filenames: {
+    current: 'operationY.log',
+    previous: 'operationY.log.{number}',
+  }
+});
+
+const newLogger = logger.newScope('child scope', [roller]);
 ```
