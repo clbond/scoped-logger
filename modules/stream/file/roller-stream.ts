@@ -12,7 +12,7 @@ import {
   writeSync,
 } from 'fs';
 
-import {plaintext} from './formatter';
+import {Formatter} from '../formatter';
 import {Level} from '../../level';
 import {Scope} from '../../scope';
 import {Stream} from '../stream';
@@ -49,7 +49,7 @@ export class RollerStream implements Stream {
     }
 
     try {
-      writeSync(this.fileDescriptor, plaintext(level, scope, message, args));
+      writeSync(this.fileDescriptor, Formatter.simpleText(level, scope, message, args));
 
       if (this.rollTimer) {
         clearTimeout(this.rollTimer);
