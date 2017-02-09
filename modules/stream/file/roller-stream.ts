@@ -40,10 +40,13 @@ export class RollerStream implements Stream {
     this.options = Object.assign({}, rollingOptions, options);
 
     this.open();
-    this.roll();
   }
 
   buffer(level: Level, scope: Scope, message: string, args: Array<any>) {
+    if (this.fileDescriptor == null || this.fileDescriptor < 0) {
+      return;
+    }
+
     try {
       writeSync(this.fileDescriptor, plaintext(level, scope, message, args));
 
@@ -59,7 +62,7 @@ export class RollerStream implements Stream {
   }
 
   dispose() {
-    if (this.fileDescriptor != null) {
+    if (this.fileDescriptor != null && this.fileDescriptor >= 0) {
       closeSync(this.fileDescriptor);
     }
 
@@ -78,11 +81,13 @@ export class RollerStream implements Stream {
 
       const mode =
         constants.O_CREAT |
-        constants.O_DIRECT |
         constants.O_WRONLY |
         constants.O_APPEND;
 
       this.fileDescriptor = openSync(this.currentPath, mode);
+      if (this.fileDescriptor < 0) {
+        throw new Error(`Open returned a sub-zero file descriptor`);
+      }
     }
     catch (e) {
       throw new Error(`Failed to open log file: ${e.stack}`);
@@ -121,8 +126,6 @@ export class RollerStream implements Stream {
     this.shiftPrevious(previous);
 
     renameSync(this.currentPath, this.resolvePrevious(0));
-
-    this.dispose();
 
     this.open();
   }
