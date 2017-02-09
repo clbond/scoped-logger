@@ -3,7 +3,6 @@ import {cwd} from 'process';
 import {resolve, join} from 'path';
 
 import {
-  constants,
   closeSync,
   existsSync,
   fstatSync,
@@ -86,12 +85,7 @@ export class RollerStream implements Stream {
     try {
       recursiveCreate(this.currentPath);
 
-      const mode =
-        constants.O_CREAT |
-        constants.O_WRONLY |
-        constants.O_APPEND;
-
-      this.fileDescriptor = openSync(this.currentPath, mode);
+      this.fileDescriptor = openSync(this.currentPath, 'a+');
       if (this.fileDescriptor < 0) {
         throw new Error(`Open returned a sub-zero file descriptor`);
       }
