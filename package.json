@@ -5,6 +5,7 @@
   "main": "build/index.js",
   "typings": "build/index.d.ts",
   "scripts": {
+    "postinstall": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch"
   },
