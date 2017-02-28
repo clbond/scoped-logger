@@ -33,11 +33,15 @@ export abstract class Formatter {
 
     const date = new Date().toISOString();
 
-    const scopeString = `\u{1b}[0;37m[${scopeToStrings(scope).join(ansicolors.brightCyan(' > '))}\u{1b}[0;37m]\u{1b}[=0l`;
+    const scopeArray = scopeToStrings(scope);
+
+    const scopeString = scopeArray.length > 0
+      ? `\u{1b}[0;37m[${scopeToStrings(scope).join(ansicolors.brightCyan(' > '))}\u{1b}[0;37m]\u{1b}[=0l `
+      : String();
 
     const coloredArgs = `\u{1b}[0;37m${formatArguments(args)}\u{1b}[=0l`;
 
-    return `${levelString} ${scopeString} ${ansistyles.bright(message)} ${coloredArgs}`;
+    return `${levelString} ${scopeString}${ansistyles.bright(message)} ${coloredArgs}`;
   }
 }
 
